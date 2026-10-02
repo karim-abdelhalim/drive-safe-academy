@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { useEffect, useState } from "react";
-import * as pixel from "../../lib/fpixel";
+import * as pixel from "@/lib/fpixel";
 
 const FacebookPixel = () => {
   const [loaded, setLoaded] = useState(false);
@@ -11,20 +11,19 @@ const FacebookPixel = () => {
 
   useEffect(() => {
     if (!loaded) return;
+    if (typeof window.fbq !== "function") return;
 
-    pixel.pageview();
+    window.fbq("init", pixel.FB_PIXEL_ID);
+    window.fbq("track", "PageView");
   }, [pathname, loaded]);
 
   return (
-    <div>
-      <Script
-        id="fb-pixel"
-        src="scripts/pixel.js"
-        strategy="afterInteractive"
-        onLoad={() => setLoaded(true)}
-        data-pixel-id={pixel.FB_PIXEL_ID}
-      />
-    </div>
+    <Script
+      id="fb-pixel"
+      src="/scripts/pixel.js"
+      strategy="afterInteractive"
+      onLoad={() => setLoaded(true)}
+    />
   );
 };
 

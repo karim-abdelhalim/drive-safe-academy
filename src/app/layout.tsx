@@ -109,15 +109,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="ar" dir="rtl" className={`${cairo.variable} h-full`}>
       <body className="font-sans antialiased">
+        <FacebookPixel />
         <Navbar />
         {children}
         <Footer />
       </body>
-      <FacebookPixel />
     </html>
   );
 }
